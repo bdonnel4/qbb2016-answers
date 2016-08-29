@@ -1,0 +1,18 @@
+/Users/cmdb/data/fastq $ fastqc SRR072893.fastq --extract
+
+cmdb@bio-cmdb-19:~/data$ hisat2 -q -x BDGP6/BDGP6 -U ./fastq/SRR072893.fastq -p 4 -S 893.sam
+21892898 reads; of these:
+  21892898 (100.00%) were unpaired; of these:
+    4679237 (21.37%) aligned 0 times
+    14921924 (68.16%) aligned exactly 1 time
+    2291737 (10.47%) aligned >1 times
+78.63% overall alignment rate
+
+/Users/cmdb/data $ samtools sort 893.sam | samtools view -b  -1 -o 893.bam
+
+/Users/cmdb/data $ stringtie 893.bam -p 4 -o 893.gtf -e -G BDGP6/BDGP6.Ensembl.85.gtf -B 
+
+
+
+
+
