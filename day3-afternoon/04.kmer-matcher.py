@@ -28,11 +28,11 @@ for indent, sequence in fasta.FASTAReader(open(sys.argv[2])): ##source fasta fil
             kmer_counts [kmer] = []
         kmer_counts[kmer].append(i)
 
-    for indent, sequence in fasta.FASTAReader(open(sys.argv[3])):
+    for indentQ, sequence in fasta.FASTAReader(open(sys.argv[3])):
         for i in range(0, len(sequence)-k):
             kmer_match = sequence [i: i+k]
             if kmer_match in kmer_counts:
-                print kmer_counts[kmer_match]   
+                print indent, kmer_counts[kmer_match], i, kmer_match
             else:
                 continue
 
