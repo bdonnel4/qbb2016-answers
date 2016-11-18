@@ -34,6 +34,12 @@ orderedDataMatrix = celltypematrix[heatmapOrder,:]
 rowHeaders = numpy.array(rowHeaders)
 orderedRowHeaders = rowHeaders[heatmapOrder,]
 
+
+
+
+
+
+
 #output data for visualization in a browser with javascript/d3.js
 matrixOutput = []
 row = 0
@@ -58,4 +64,25 @@ X = celltypematrix
 d = dist.pdist(X)
 Z= hier.linkage(d,method='complete')
 P =hier.dendrogram(Z)
-plt.show()
+plt.savefig("dendrogram.png")
+plt.close()
+
+#calculate distance matrix and convert to squareform
+distanceMatrix = dist.pdist(dataMatrix)
+distanceSquareMatrix = dist.squareform(distanceMatrix)
+
+#calculate linkage matrix
+linkageMatrix = hier.linkage(distanceSquareMatrix)
+
+#get the order of the dendrogram leaves
+heatmapOrder = hier.leaves_list(linkageMatrix)
+
+#reorder the data matrix and row headers according to leaves
+orderedDataMatrix = celltypematrix[:,heatmapOrder]
+rowHeaders = numpy.array(rowHeaders)
+orderedRowHeaders = rowHeaders[heatmapOrder,]
+
+plt.figure()
+plt.imshow(orderedDataMatrix, aspect='auto', interpolation='nearest')
+plt.savefig('heatmap.png')
+
